@@ -43,7 +43,45 @@ public:
     }
 
     void insertAtPosition(int pos, int val) {
-        //tom.
+        if(pos < 1) {
+            cout << "Invalid Position" << endl;
+            return;
+        }
+
+        if(pos == 1) {
+            insertAtBeginning(val);
+            return;
+        }
+
+        Node* newNode = new Node(val);
+        Node* temp = head;
+
+        for (int i=1; temp!=nullptr && i<pos-1; i++) {
+            temp = temp->next;
+        }
+
+        if(temp == nullptr) {
+            cout << "Position out of bounds!" << endl;
+            delete newNode;
+            return;
+        }
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+
+    bool searchByValue(int val) {
+        Node* temp = head;
+        while(temp != nullptr) {
+            if(temp->data == val) {
+                return true;
+            }
+            temp = temp->next;
+        }
+        return false;
+    }    
+
+    int length() {
+        //
     }
 
     void printListFromBeginning() {
@@ -90,23 +128,25 @@ int main() {
                 cin >> value;
                 list.insertAtEnd(value);
                 break;
-            // case 3:
-            //     cout << "Enter position and value: ";
-            //     cin >> position >> value;
-            //     list.insertAtPosition(position, value);
-            //     break;
-            // case 4:
-            //     cout << "Enter value to search: ";
-            //     cin >> value;
-            //     if (list.searchByValue(value)) {
-            //         cout << "Value found in the list." << endl;
-            //     } else {
-            //         cout << "Value not found in the list." << endl;
-            //     }
-            //     break;
-            // case 5:
-            //     cout << "Length of the list: " << list.length() << endl;
-            //     break;
+            case 3:
+                cout << "Enter position and value: ";
+                cin >> position >> value;
+                list.insertAtPosition(position, value);
+                system("pause");
+                break;
+            case 4:
+                cout << "Enter value to search: ";
+                cin >> value;
+                if (list.searchByValue(value)) {
+                    cout << "Value found in the list." << endl;
+                } else {
+                    cout << "Value not found in the list." << endl;
+                }
+                system("pause");
+                break;
+            case 5:
+                cout << "Length of the list: " << list.length() << endl;
+                break;
             // case 6:
             //     list.reverseList();
             //     cout << "List reversed." << endl;

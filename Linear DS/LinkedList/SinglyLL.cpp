@@ -81,7 +81,85 @@ public:
     }    
 
     int length() {
-        //
+        int len = 0;
+        Node* temp = head;
+
+        while(temp != nullptr) {
+            len++;
+            temp = temp->next;
+        }
+        return len;
+    }
+
+    void reverseList() {
+        Node* prev = nullptr;
+        Node* curr = head;
+        Node* next = nullptr;
+
+        while(curr != nullptr) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
+    }
+
+    void deleteAtBeginning() {
+        if(head == nullptr) {
+            cout << "List is empty!" << endl;
+            return;
+        }
+
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+
+    void deleteAtEnd() {
+        if(head == nullptr) {
+            cout << "List is empty!" << endl;
+            return;
+        }
+
+        if(head->next == nullptr) {
+            delete head;
+            head = nullptr;
+            return;
+        }
+
+        Node* temp = head;
+        while(temp->next->next != nullptr) {
+            temp = temp->next;
+        }
+        delete temp->next;
+        temp->next = nullptr;
+    }
+
+    void deleteAtPosition(int pos) {
+        if(head == nullptr || pos < 1) {
+            cout << "Invalid position or list is empty!" << endl;
+            return;
+        }
+
+        if(pos == 1) {
+            deleteAtBeginning();
+            return;
+        }
+
+        Node* temp = head;
+        for (int i=1; temp!=nullptr && i<pos-1; i++) {
+            temp = temp->next;
+        }
+
+        if(temp == nullptr || temp->next == nullptr) {
+            cout << "Position out of bounds!" << endl;
+            return;
+        }
+
+        Node* nodeToDelete = temp->next;
+        temp->next = temp->next->next;
+        delete nodeToDelete;
     }
 
     void printListFromBeginning() {
@@ -92,6 +170,20 @@ public:
         }
         cout << "NULL\n";
     }
+
+    void printListFromEndRecursive(Node* node) {
+        if(node == nullptr) {
+            return;
+        }
+        printListFromEndRecursive(node->next);
+        cout << node->data << " -> ";
+    }
+
+    void printListFromEnd() {
+        printListFromEndRecursive(head);
+        cout << "NULL" << endl;
+    }
+
 };
 
 int main() {
@@ -146,31 +238,34 @@ int main() {
                 break;
             case 5:
                 cout << "Length of the list: " << list.length() << endl;
+                system("pause");
                 break;
-            // case 6:
-            //     list.reverseList();
-            //     cout << "List reversed." << endl;
-            //     break;
-            // case 7:
-            //     list.deleteAtBeginning();
-            //     cout << "Deleted at beginning." << endl;
-            //     break;
-            // case 8:
-            //     list.deleteAtEnd();
-            //     cout << "Deleted at end." << endl;
-            //     break;
-            // case 9:
-            //     cout << "Enter position to delete: ";
-            //     cin >> position;
-            //     list.deleteAtPosition(position);
-            //     break;
+            case 6:
+                list.reverseList();
+                cout << "List reversed." << endl;
+                break;
+            case 7:
+                list.deleteAtBeginning();
+                cout << "Deleted at beginning." << endl;
+                break;
+            case 8:
+                list.deleteAtEnd();
+                cout << "Deleted at end." << endl;
+                break;
+            case 9:
+                cout << "Enter position to delete: ";
+                cin >> position;
+                list.deleteAtPosition(position);
+                system("pause");
+                break;
             case 10:
                 list.printListFromBeginning();
                 system("pause");
                 break;
-            // case 11:
-            //     list.printListFromEnd();
-            //     break;
+            case 11:
+                list.printListFromEnd();
+                system("pause");
+                break;
             case 0:
                 cout << "Exiting..." << endl;
                 break;

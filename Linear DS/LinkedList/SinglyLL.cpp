@@ -277,3 +277,15 @@ int main() {
 
     return 0;
 }
+
+/*
+Scenario: Managing Flight Schedules
+Imagine you work for an airline that needs to manage its daily flight schedules. Each flight has a unique 
+identifier, a departure time, and a destination. You want to maintain a list of flights for a specific day, 
+allowing you to efficiently add, remove, and traverse through the flights.
+
+You can use a singly linked list to represent this list of flights. Each node in the list represents a 
+flight, and the linked list allows you to dynamically manage the schedule without needing to know the total 
+number of flights in advance.
+
+*/

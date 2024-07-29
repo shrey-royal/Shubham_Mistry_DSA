@@ -47,6 +47,69 @@ public:
         cout << "NULL\n";
     }
 
+    void reverseList() {
+        Node* curr = head;
+        Node* temp = nullptr;
+
+        while(curr != nullptr) {
+            temp = curr->prev;
+            curr->prev = curr->next;
+            curr->next = temp;
+            curr = curr->prev;
+        }
+        if(temp != nullptr) {
+            head = temp->prev;
+        }
+    }
+
+    void deleteAtBeginning() {
+        if(head == nullptr) {
+            cout << "List is empty!" << endl;
+            return;
+        }
+
+        Node* temp = head;
+        head = head->next;
+
+        if(head != nullptr) {
+            head->prev  = nullptr;
+        } else {
+            tail = nullptr;
+        }
+        delete temp;
+    }
+
+    void deleteAtPosition(int pos) {
+        if(head == nullptr || pos < 1) {
+            cout << "Invalid Position or List is empty!" << endl;
+            return;
+        }
+
+        if(pos == 1) {
+            deleteAtBeginning();
+            return;
+        }
+
+        Node* temp = head;
+
+        for (int i = 0; temp != nullptr && i < pos; i++) {
+            temp = temp->next;
+        }
+
+        if(temp->prev != nullptr) {
+            temp->prev->next = temp->next;
+        }
+
+        if(temp->next != nullptr) {
+            temp->next->prev = temp->prev;
+        }
+
+        if(temp == tail) {
+            tail = temp->prev;
+        }
+        delete temp;
+    }
+
 };
 
 int main() {
@@ -100,23 +163,23 @@ int main() {
             // case 5:
             //     cout << "Length of the list: " << list.length() << endl;
             //     break;
-            // case 6:
-            //     list.reverseList();
-            //     cout << "List reversed." << endl;
-            //     break;
-            // case 7:
-            //     list.deleteAtBeginning();
-            //     cout << "Deleted at beginning." << endl;
-            //     break;
+            case 6:
+                list.reverseList();
+                cout << "List reversed." << endl;
+                break;
+            case 7:
+                list.deleteAtBeginning();
+                cout << "Deleted at beginning." << endl;
+                break;
             // case 8:
             //     list.deleteAtEnd();
             //     cout << "Deleted at end." << endl;
             //     break;
-            // case 9:
-            //     cout << "Enter position to delete: ";
-            //     cin >> position;
-            //     list.deleteAtPosition(position);
-            //     break;
+            case 9:
+                cout << "Enter position to delete: ";
+                cin >> position;
+                list.deleteAtPosition(position);
+                break;
             case 10:
                 list.printListFromBeginning();
                 break;

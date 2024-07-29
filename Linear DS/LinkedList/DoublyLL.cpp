@@ -92,7 +92,7 @@ public:
 
         Node* temp = head;
 
-        for (int i = 0; temp != nullptr && i < pos; i++) {
+        for (int i = 1; temp != nullptr && i < pos; i++) {
             temp = temp->next;
         }
 

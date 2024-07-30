@@ -1,0 +1,17 @@
+Problem: Implementing a Playlist Management System
+
+Scenario:
+Imagine you’re building a media player application that allows users to create and manage playlists. Each playlist consists of songs, and the user should be able to:
+
+1. Add songs to the beginning or end of the playlist.
+2. Remove songs from the beginning, end, or a specific position in the playlist.
+3. Navigate through the playlist forwards and backwards.
+4. Reverse the order of songs in the playlist.
+
+Solution:
+A doubly linked list is an excellent data structure for this use case because it allows efficient insertion and deletion of elements from both ends of the playlist and enables traversal in both directions.
+
+- Adding Songs: You can add songs to the beginning (using the `insertAtBeginning` method) or end of the playlist (using an equivalent `insertAtEnd` method) with ease.
+- Removing Songs: Removing songs from the beginning (using `deleteAtBeginning`), end (using an equivalent `deleteAtEnd` method), or any specific position (using `deleteAtPosition`) is straightforward.
+- Navigating the Playlist: You can traverse the playlist forwards by moving from the head to the tail, and backwards by moving from the tail to the head, leveraging the `prev` pointers.
+- Reversing Playlist Order: Reversing the playlist (using the `reverseList` method) involves swapping the `next` and `prev` pointers of each node, which is efficiently supported by a doubly linked list.

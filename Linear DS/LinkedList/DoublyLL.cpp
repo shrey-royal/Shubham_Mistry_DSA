@@ -37,6 +37,39 @@ public:
         }
     }
 
+    void insertAtPosition(int pos, int val) {
+        if (pos < 1) {
+            cout << "Invalid position!" << endl;
+            return;
+        }
+        
+        if (pos == 1) {
+            insertAtBeginning(val);
+            return;
+        }
+
+        Node* newNode = new Node(val);
+        Node* temp = head;
+        for (int i = 1; temp != nullptr && i < pos - 1; ++i) {
+            temp = temp->next;
+        }
+        
+        if (temp == nullptr) {
+            cout << "Position out of bounds!" << endl;
+            delete newNode;
+            return;
+        }
+        newNode->next = temp->next;
+        if (temp->next != nullptr) {
+            temp->next->prev = newNode;
+        }
+        temp->next = newNode;
+        newNode->prev = temp;
+        if (newNode->next == nullptr) {
+            tail = newNode;
+        }
+    }
+
     void printListFromBeginning() {
         Node* temp = head;
         cout << "NULL <-> ";
@@ -75,6 +108,21 @@ public:
             head->prev  = nullptr;
         } else {
             tail = nullptr;
+        }
+        delete temp;
+    }
+
+    void deleteAtEnd() {
+        if (tail == nullptr) {
+            cout << "List is empty!" << endl;
+            return;
+        }
+        Node* temp = tail;
+        tail = tail->prev;
+        if (tail != nullptr) {
+            tail->next = nullptr;
+        } else {
+            head = nullptr;
         }
         delete temp;
     }
@@ -146,11 +194,11 @@ int main() {
             //     cin >> value;
             //     list.insertAtEnd(value);
             //     break;
-            // case 3:
-            //     cout << "Enter position and value: ";
-            //     cin >> position >> value;
-            //     list.insertAtPosition(position, value);
-            //     break;
+            case 3:
+                cout << "Enter position and value: ";
+                cin >> position >> value;
+                list.insertAtPosition(position, value);
+                break;
             // case 4:
             //     cout << "Enter value to search: ";
             //     cin >> value;
@@ -171,10 +219,10 @@ int main() {
                 list.deleteAtBeginning();
                 cout << "Deleted at beginning." << endl;
                 break;
-            // case 8:
-            //     list.deleteAtEnd();
-            //     cout << "Deleted at end." << endl;
-            //     break;
+            case 8:
+                list.deleteAtEnd();
+                cout << "Deleted at end." << endl;
+                break;
             case 9:
                 cout << "Enter position to delete: ";
                 cin >> position;

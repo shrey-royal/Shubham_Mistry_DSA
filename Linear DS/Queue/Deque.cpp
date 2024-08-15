@@ -46,6 +46,44 @@ public:
         return size == 0;
     }
 
+    int dequeueFront() {
+        if(isEmpty()) {
+            cout << "Deque is empty!" << endl;
+            return -1;
+        }
+        int value = arr[front];
+        front = (front + 1) % capacity;
+        size--;
+        return value;
+    }
+
+    int dequeueRear() {
+        if(isEmpty()) {
+            cout << "Deque is empty!" << endl;
+            return -1;
+        }
+        int value = arr[rear];
+        rear = (rear - 1 + capacity) % capacity;
+        size--;
+        return value;
+    }
+
+    int peekFront() {
+        if(isEmpty()) {
+            cout << "Deque is empty!" << endl;
+            return -1;
+        }
+        return arr[front];
+    }
+
+    int peekRear() {
+        if(isEmpty()) {
+            cout << "Deque is empty!" << endl;
+            return -1;
+        }
+        return arr[rear];
+    }
+
     void display() {
         if(isEmpty()) {
             cout << "Deque is empty!" << endl;
@@ -89,30 +127,34 @@ int main() {
                 cin >> value;
                 deque.enqueueRear(value);
                 break;
-            // case 3:
-            //     value = deque.dequeueFront();
-            //     if (value != -1) {
-            //         cout << "Dequeued value from front: " << value << endl;
-            //     }
-            //     break;
-            // case 4:
-            //     value = deque.dequeueRear();
-            //     if (value != -1) {
-            //         cout << "Dequeued value from rear: " << value << endl;
-            //     }
-            //     break;
-            // case 5:
-            //     value = deque.peekFront();
-            //     if (value != -1) {
-            //         cout << "Front value: " << value << endl;
-            //     }
-            //     break;
-            // case 6:
-            //     value = deque.peekRear();
-            //     if (value != -1) {
-            //         cout << "Rear value: " << value << endl;
-            //     }
-            //     break;
+            case 3:
+                value = deque.dequeueFront();
+                if (value != -1) {
+                    cout << "Dequeued value from front: " << value << endl;
+                }
+                system("pause");
+                break;
+            case 4:
+                value = deque.dequeueRear();
+                if (value != -1) {
+                    cout << "Dequeued value from rear: " << value << endl;
+                }
+                system("pause");
+                break;
+            case 5:
+                value = deque.peekFront();
+                if (value != -1) {
+                    cout << "Front value: " << value << endl;
+                }
+                system("pause");
+                break;
+            case 6:
+                value = deque.peekRear();
+                if (value != -1) {
+                    cout << "Rear value: " << value << endl;
+                }
+                system("pause");
+                break;
             case 7:
                 deque.display();
                 system("pause");

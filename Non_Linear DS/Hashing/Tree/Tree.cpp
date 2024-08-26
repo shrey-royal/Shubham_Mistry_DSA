@@ -36,9 +36,113 @@ private:
         return new Node(data);
     }
 
-    //insertNode
+    Node* insert(Node* node, int data) {
+        if(node == nullptr) return createNode(data);
+
+        if(data < node->data) {
+            node->left = insert(node->left, data);
+        } else if(data > node->data) {
+            node->right = insert(node->right, data);
+        }
+        return node;
+    }
+
+    void inorder(Node* node) {
+        if (node != nullptr) {
+            inorder(node->left);
+            cout << node->data << " ";
+            inorder(node->right);
+        }
+    }
+
+    void preorder(Node* node) {
+        if (node != nullptr) {
+            cout << node->data << " ";
+            preorder(node->left);
+            preorder(node->right);
+        }
+    }
+
+    void postorder(Node* node) {
+        if (node != nullptr) {
+            postorder(node->left);
+            postorder(node->right);
+            cout << node->data << " ";
+        }
+    }
+
+    Node* search(Node* node, int value) {
+        if (node == nullptr || node->data == value) return node;
+
+        if (value < node->data) return search(node->left, value);
+        else return search(node->right, value);
+    }
+
+    int height(Node* node) {
+        if(node == nullptr) return 0;
+        int leftHeight = height(node->left);
+        int rightHeight = height(node->right);
+        return 1 + max(leftHeight, rightHeight);
+    }
+
+    void printTree(Node* node, int space) {
+        if (node == nullptr) return;
+
+        space += 4;
+
+        printTree(node->right, space);
+
+        for (int i = 4; i < space; i++) {
+            cout << " ";
+        }
+        cout << node->data << "\n";
+
+        printTree(node->left, space);
+    }
+
+public:
+    BinaryTree() {
+        root = nullptr;
+    }
+
+    void insert(int data) {
+        root = insert(root, data);
+    }
+
+    void inorder() {
+        inorder(root);
+        cout << endl;
+    }
+
+    void preorder() {
+        preorder(root);
+        cout << endl;
+    }
+
+    void postorder() {
+        postorder(root);
+        cout << endl;
+    }
+
+    void displayTree() {
+        printTree(root, 0);
+    }
+
+    void search(int data) {
+        Node* result = search(root, data);
+        if(result != nullptr) {
+            cout << "\nKey " << data << " found in the tree.\n";
+        } else {
+            cout << "\nKey " << data << " not found in the tree.\n";
+        }
+    }
+
+    void height() {
+        cout << "\nheight of the Tree: " << height(root) << endl;
+    }
 };
 
+// tree: 1 8 1 3 1 10 1 1 1 6 1 14 1 4 1 7 1 13
 int main() {
     BinaryTree bt;
     ListNode* head = nullptr;
@@ -46,7 +150,7 @@ int main() {
 
     do {
         system("cls");
-        // bt.displayTree();
+        bt.displayTree();
         cout << "\n\nBinary Tree Operations Menu\n";
         cout << "1. Insert\n";
         cout << "2. Inorder Traversal\n";
@@ -68,29 +172,29 @@ int main() {
         cin >> choice;
 
         switch (choice) {
-            // case 1:
-            //     cout << "\nEnter the data to insert: ";
-            //     cin >> data;
-            //     bt.insert(data);
-            //     break;
+            case 1:
+                cout << "\nEnter the data to insert: ";
+                cin >> data;
+                bt.insert(data);
+                break;
 
-            // case 2:
-            //     cout << "\nInorder Traversal: ";
-            //     bt.inorder();
-            //     system("pause");
-            //     break;
+            case 2:
+                cout << "\nInorder Traversal: ";
+                bt.inorder();
+                system("pause");
+                break;
 
-            // case 3:
-            //     cout << "\nPreorder Traversal: ";
-            //     bt.preorder();
-            //     system("pause");
-            //     break;
+            case 3:
+                cout << "\nPreorder Traversal: ";
+                bt.preorder();
+                system("pause");
+                break;
 
-            // case 4:
-            //     cout << "\nPostorder Traversal: ";
-            //     bt.postorder();
-            //     system("pause");
-            //     break;
+            case 4:
+                cout << "\nPostorder Traversal: ";
+                bt.postorder();
+                system("pause");
+                break;
 
             // case 5:
             //     cout << "\nPlease enter a value to search: ";
@@ -151,10 +255,10 @@ int main() {
             //     bt.pruneTree();
             //     break;
 
-            // case 15:
-            //     bt.displayTree();
-            //     system("pause");
-            //     break;
+            case 15:
+                bt.displayTree();
+                system("pause");
+                break;
 
             case 0:
                 cout << "Exiting the program...\n";

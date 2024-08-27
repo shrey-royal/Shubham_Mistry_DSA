@@ -85,6 +85,63 @@ private:
         return 1 + max(leftHeight, rightHeight);
     }
 
+    void levelOrderTraversal(Node* node) {
+        if (node == nullptr) return;
+
+        const int MAX_SIZE = 100;
+        Node* queue[MAX_SIZE];
+        int front = 0;
+        int rear = 0;
+
+        queue[rear++] = node;
+
+        cout << "\nLevel Order Traversal: ";
+        while (front < rear) {
+            Node* current = queue[front++];
+            cout << current->data << " ";
+
+            if(current->left != nullptr) queue[rear++] = current->left;
+            if(current->right != nullptr) queue[rear++] = current->right;
+        }
+    }
+
+    Node* deleteNode(Node* node, int data) {
+        if(node == nullptr) return node;
+
+        if(data < node->data) node->left = deleteNode(node->left, data);
+        else if(data > node->data) node->right = deleteNode(node->right, data);
+        else {
+            if(node->left == nullptr) {
+                Node* temp = node->right;
+                delete node;
+                return temp;
+            } else if(node->right == nullptr) {
+                Node* temp = node->left;
+                delete node;
+                return temp;
+            }
+            Node* temp = findMin(node->right);
+            node->data = temp->data;
+            node->right = deleteNode(node->right, temp->data);    
+        }
+        return node;
+    }
+
+    Node* findMin(Node* node) {
+        while (node && node->left != nullptr) node = node->left;
+        return node;
+    }
+
+    void findMinMax(Node* node, int& min, int& max) {
+        if (node == nullptr) return;
+
+        if (node->data < min) min = node->data;
+        if (node->data > max) max = node->data;
+
+        findMinMax(node->left, min, max);
+        findMinMax(node->right, min, max);
+    }
+
     void printTree(Node* node, int space) {
         if (node == nullptr) return;
 
@@ -139,6 +196,22 @@ public:
 
     void height() {
         cout << "\nheight of the Tree: " << height(root) << endl;
+    }
+
+    void levelOrderTraversal() {
+        levelOrderTraversal(root);
+        cout << endl;
+    }
+
+    void deleteNode(int data) {
+        root = deleteNode(root, data);
+    }
+
+    void findMinMax() {
+        int min = INT_MAX, max = INT_MIN;
+        findMinMax(root, min, max);
+        cout << "\nMinimum value in the tree: " << min;
+        cout << "\nMaximum value in the tree: " << max << endl;
     }
 };
 
@@ -196,33 +269,33 @@ int main() {
                 system("pause");
                 break;
 
-            // case 5:
-            //     cout << "\nPlease enter a value to search: ";
-            //     cin >> data;
-            //     bt.search(data);
-            //     system("pause");
-            //     break;
+            case 5:
+                cout << "\nPlease enter a value to search: ";
+                cin >> data;
+                bt.search(data);
+                system("pause");
+                break;
 
-            // case 6:
-            //     bt.height();
-            //     system("pause");
-            //     break;
+            case 6:
+                bt.height();
+                system("pause");
+                break;
 
-            // case 7:
-            //     bt.levelOrderTraversal();
-            //     system("pause");
-            //     break;
+            case 7:
+                bt.levelOrderTraversal();
+                system("pause");
+                break;
 
-            // case 8:
-            //     cout << "\nEnter the value to delete: ";
-            //     cin >> data;
-            //     bt.deleteNode(data);
-            //     break;
+            case 8:
+                cout << "\nEnter the value to delete: ";
+                cin >> data;
+                bt.deleteNode(data);
+                break;
 
-            // case 9:
-            //     bt.findMinMax();
-            //     system("pause");
-            //     break;
+            case 9:
+                bt.findMinMax();
+                system("pause");
+                break;
 
             // case 10:
             //     bt.convertBSTtoLinkedList(head);

@@ -142,6 +142,28 @@ private:
         findMinMax(node->right, min, max);
     }
 
+    void insertAtEnd(ListNode*& head, int val) {
+        ListNode* newNode = new ListNode(val);
+
+        if(head == nullptr) {
+            head = newNode;
+            return;
+        }
+
+        ListNode* temp = head;
+        while(temp->next != nullptr) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+
+    void convertBSTtoLinkedList(Node* node, ListNode*& head) {
+        if(node == nullptr) return;
+        convertBSTtoLinkedList(node->left, head);
+        insertAtEnd(head, node->data);
+        convertBSTtoLinkedList(node->right, head);
+    }
+
     void printTree(Node* node, int space) {
         if (node == nullptr) return;
 
@@ -212,6 +234,24 @@ public:
         findMinMax(root, min, max);
         cout << "\nMinimum value in the tree: " << min;
         cout << "\nMaximum value in the tree: " << max << endl;
+    }
+
+    void convertBSTtoLinkedList(ListNode*& head) {
+        convertBSTtoLinkedList(root, head);
+    }
+
+    void printList(ListNode* head) {
+        if(head == nullptr) {
+            cout << "List is empty!" << endl;
+            return;
+        }
+        
+        ListNode* temp = head;
+        while(temp != nullptr) {
+            cout << temp->data << " -> ";
+            temp = temp->next;
+        }
+        cout << "NULL\n";
     }
 };
 
@@ -297,11 +337,11 @@ int main() {
                 system("pause");
                 break;
 
-            // case 10:
-            //     bt.convertBSTtoLinkedList(head);
-            //     bt.printList(head);
-            //     system("pause");
-            //     break;
+            case 10:
+                bt.convertBSTtoLinkedList(head);
+                bt.printList(head);
+                system("pause");
+                break;
 
             // case 11:
             //     bt.serializeTree("store_tree.txt");

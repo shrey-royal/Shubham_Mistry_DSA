@@ -179,6 +179,32 @@ private:
         printTree(node->left, space);
     }
 
+    void serializeTree(Node* node, ofstream& outFile) {
+        if (node == nullptr) {
+            outFile << "N ";
+            return;
+        }
+
+        outFile << node->data << " ";
+        serializeTree(node->left, outFile);
+        serializeTree(node->right, outFile);
+    }
+
+    Node* deserializeTree(ifstream& inFile) {
+        string token;
+        inFile >> token;
+
+        if (token == "N") return nullptr;
+
+        int data = stoi(token);
+        Node* node = createNode(data);
+
+        node->left = deserializeTree(inFile);
+        node->right = deserializeTree(inFile);
+
+        return node;
+    }
+
 public:
     BinaryTree() {
         root = nullptr;
@@ -238,6 +264,27 @@ public:
 
     void convertBSTtoLinkedList(ListNode*& head) {
         convertBSTtoLinkedList(root, head);
+    }
+
+    void serializeTree(string filename) {
+        ofstream outFile(filename);
+        if(!outFile.is_open()) {
+            cerr << "\nError opening file for writing.\n";
+            return;
+        }
+        serializeTree(root, outFile);
+        outFile.close();
+    }
+
+    void deserializeTree(string filename) {
+        ifstream inFile(filename);
+
+        if (!inFile.is_open()) {
+            cerr << "\nError opening file for writing.\n";
+            return;
+        }
+        root = deserializeTree(inFile);
+        inFile.close();
     }
 
     void printList(ListNode* head) {
@@ -343,18 +390,18 @@ int main() {
                 system("pause");
                 break;
 
-            // case 11:
-            //     bt.serializeTree("store_tree.txt");
-            //     cout << "\n";
-            //     system("pause");
-            //     break;
+            case 11:
+                bt.serializeTree("store_tree.txt");
+                cout << "\n";
+                system("pause");
+                break;
 
-            // case 12:
-            //     bt.deserializeTree("store_tree.txt");
-            //     bt.displayTree();
-            //     cout << "\n";
-            //     system("pause");
-            //     break;
+            case 12:
+                bt.deserializeTree("store_tree.txt");
+                bt.displayTree();
+                cout << "\n";
+                system("pause");
+                break;
 
             // case 13:
             //     cout << "Enter two keys to find LCA: ";

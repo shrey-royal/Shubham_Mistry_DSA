@@ -205,6 +205,26 @@ private:
         return node;
     }
 
+    Node* findLCA(Node* node, int n1, int n2) {
+        if (node == nullptr || node->data == n1 || node->data == n2) return node;
+
+        Node* leftLCA = findLCA(node->left, n1, n2);
+        Node* rightLCA = findLCA(node->right, n1, n2);
+
+        if(leftLCA != nullptr && rightLCA != nullptr) return node;
+        
+        return (leftLCA != nullptr) ? leftLCA : rightLCA;
+    }
+
+    void pruneTree(Node*& node) {
+        if (node != nullptr) {
+            pruneTree(node->left);
+            pruneTree(node->right);
+            delete node;
+            node = nullptr;
+        }
+    }
+
 public:
     BinaryTree() {
         root = nullptr;
@@ -287,18 +307,17 @@ public:
         inFile.close();
     }
 
-    void printList(ListNode* head) {
-        if(head == nullptr) {
-            cout << "List is empty!" << endl;
-            return;
+    void findLCA(int n1, int n2) {
+        Node* lca = findLCA(root, n1, n2);
+        if(lca != nullptr) {
+            cout << "Lowest Common Ancestor of " << n1 << " and " << n2 << ": " << lca->data << endl;
+        } else {
+            cout << "One or both keys not present in the tree.\n";
         }
-        
-        ListNode* temp = head;
-        while(temp != nullptr) {
-            cout << temp->data << " -> ";
-            temp = temp->next;
-        }
-        cout << "NULL\n";
+    }
+
+    void pruneTree() {
+        pruneTree(root);
     }
 };
 
@@ -386,7 +405,7 @@ int main() {
 
             case 10:
                 bt.convertBSTtoLinkedList(head);
-                bt.printList(head);
+                bt.displayTree();
                 system("pause");
                 break;
 
@@ -403,17 +422,17 @@ int main() {
                 system("pause");
                 break;
 
-            // case 13:
-            //     cout << "Enter two keys to find LCA: ";
-            //     int n1, n2;
-            //     cin >> n1 >> n2;
-            //     bt.findLCA(n1, n2);
-            //     system("pause");
-            //     break;
+            case 13:
+                cout << "Enter two keys to find LCA: ";
+                int n1, n2;
+                cin >> n1 >> n2;
+                bt.findLCA(n1, n2);
+                system("pause");
+                break;
 
-            // case 14:
-            //     bt.pruneTree();
-            //     break;
+            case 14:
+                bt.pruneTree();
+                break;
 
             case 15:
                 bt.displayTree();
